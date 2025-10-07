@@ -1,0 +1,47 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse-server
+    restart: always    
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        sed -i 's|<!-- <listen_host>0.0.0.0</listen_host> -->|<listen_host>0.0.0.0</listen_host>|' /etc/clickhouse-server/config.xml
+        /entrypoint.sh
+    ports:
+      # Native ClickHouse protocol (for clickhouse-client)
+      - "9000:9000"
+      # HTTP interface (for web UI and HTTP clients)
+      - "8123:8123"
+      # MySQL compatibility port
+      - "9004:9004"
+      # PostgreSQL compatibility port  
+      - "9005:9005"
+    volumes:
+      # Data directory
+      - ./clickhouse/data:/var/lib/clickhouse/
+      # Logs directory
+      - ./clickhouse/logs:/var/log/clickhouse-server/
+      # Configuration files
+      - ./clickhouse/config:/etc/clickhouse-server/config.d/
+      # Users configuration
+      - ./clickhouse/users:/etc/clickhouse-server/users.d/
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    environment:
+      # Database name
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
+      # Default user credentials
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      # Default database
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
