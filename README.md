@@ -1,4 +1,4 @@
-# Amazon Reviews ETL Pipeline with ClickHouse
+# Amazon Reviews (2023) ETL Pipeline with ClickHouse
 
 ## Table of Contents
 - [Setup Overview](#setup-overview)
@@ -12,8 +12,21 @@
 - [Contributors](#contributors)
 
 
-## Setup Overview
-This repository contains a project for a Senior Data Engineer take-home assignment. The project is structured to demonstrate data ingestion, processing, and analysis using Python and ClickHouse.
+## 📘 Overview
+
+AmazonReviews23ClickhouseETL is a data engineering project designed to efficiently extract, transform, and load (ETL) Amazon product reviews into a ClickHouse database for high-performance analytics.
+
+This pipeline automates the full data flow — from raw review datasets to structured, query-ready tables — enabling fast insights into product performance, customer sentiment, and review trends.
+
+Key highlights:
+
+* 🔄 ETL Automation: Streamlined ingestion and transformation of large review datasets.
+
+* ⚡ ClickHouse Integration: Optimized schema and queries for lightning-fast analytics.
+
+* 🧩 Scalable Design: Built to handle millions of records with minimal resource usage.
+
+* 📊 Data Ready for Analysis: Supports dashboards, BI tools, and machine learning pipelines.
 
 
 ## Tasks
@@ -151,5 +164,5 @@ The detailed proposal for automating ingestion is available in the `docs/Automat
 NOTE: Run the ingestion script first before running the analysis script to ensure the table is created and there is data in the ClickHouse database. The analysis script depends on the data ingested by the ingestion script. The scripts will throw errors if the table needed for analysis is not found in the database.
 Thanks for reviewing my submission. I look forward to your feedback!
 
-### Contributors
-[Sophonie Ngakoutou](https://github.com/Sopho-Ngak)
+## Contributors
+* [Sophonie Ngakoutou](https://github.com/Sopho-Ngak)
