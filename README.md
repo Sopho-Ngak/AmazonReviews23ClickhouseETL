@@ -68,7 +68,7 @@ the results. Include any assumptions and how to reproduce your work.
 
 ## Project Structure
 ```
-BNR/
+AmazonReviews23ClickhouseETL/
 │── config/
 │   └── config.py          # Configuration file for credentials and settings
 │   └── docs/             # Folder for project documentation
@@ -104,9 +104,9 @@ git clone https://github.com/datasciencenbr/python-dbutils.git
 cd python-dbutils
 pip install .
 ```
-- Navigate back to this project (`BNR`) directory and install other dependencies listed in `requirements.txt`:
+- Navigate back to this project (`AmazonReviews23ClickhouseETL`) directory and install other dependencies listed in `requirements.txt`:
 ```bash
-cd BNR
+cd AmazonReviews23ClickhouseETL
 pip install -r requirements.txt
 ```
 3. Use the template in .env.example to create a .env file in the root directory of the project and update it with your ClickHouse credentials.
