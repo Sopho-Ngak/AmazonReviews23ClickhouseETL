@@ -1,4 +1,4 @@
-# Senior Data Engineer Take‐Home assignment (2‐Day)
+# Amazon Reviews ETL Pipeline with ClickHouse
 
 ## Table of Contents
 - [Setup Overview](#setup-overview)

@@ -19,7 +19,9 @@ class ClickHouseDB:
             self.q.sql_query("SELECT 1 AS test")
             logger.info(f"Successfully Connected to ClickHouse database: {clickhouse_config['db_name']}")
         except Exception as e:
+            logger.error("Failed to connect to ClickHouse")
             raise e
+        
 
     def sql_query(self, sql: str) -> pl.DataFrame:
         logger.info(f"Executing SQL query")
@@ -28,10 +30,8 @@ class ClickHouseDB:
         return data
 
 
-    def sql_write_df(self, df: pl.DataFrame, table_name: str, max_chunk: int = None, schema: str = None):
+    def sql_write_df(self, df: pl.DataFrame, table_name: str, max_chunk: int = clickhouse_config['max_chunk'], schema: str = clickhouse_config['db_name']):
         logger.info(f"Writing DataFrame to table {table_name}...")
-        if not max_chunk:
-            max_chunk = clickhouse_config['max_chunk']
 
         if type(df) is not pl.DataFrame:
             raise ValueError("df must be a Polars DataFrame")

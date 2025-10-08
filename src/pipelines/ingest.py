@@ -1,7 +1,5 @@
 import json
 import gzip
-import logging
-import os
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -162,6 +160,7 @@ class AmazonReviewsIngestion(ClickHouseDB):
             
             # add ingest_ts column (referer to the date of ingestion)
             df = df.with_columns(pl.lit(datetime.now()).alias('ingest_ts'))
+
             self.sql_write_df(df=df, table_name=table, schema=self.schema)
             del df  # free up memory
             logger.info(f"Inserted {new_records} new records into '{table}'.")
@@ -296,7 +295,6 @@ class AmazonReviewsIngestion(ClickHouseDB):
                 logger.error(f"Error ingesting file {file_path}: {e}")
                 total_stats['errors'] += 1
                 continue
-            break
                     
         logger.info("Final Ingestion Stats")
         logger.info("-" * 30)

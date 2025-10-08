@@ -18,8 +18,7 @@ sql_queries = {
             timestamp DateTime,
             ingest_ts DateTime DEFAULT now()
         )
-        ENGINE = ReplacingMergeTree(ingest_ts) -- Use ReplacingMergeTree for deduplication
-        PARTITION BY toYear(timestamp)
+        ENGINE = ReplacingMergeTree(timestamp) -- Use ReplacingMergeTree for deduplication
         ORDER BY (asin, user_id, parent_asin);
 """},
 
@@ -37,14 +36,13 @@ sql_queries = {
             attachment_type String,
             ingest_ts DateTime DEFAULT now()
         )
-        ENGINE = ReplacingMergeTree(ingest_ts) -- Use ReplacingMergeTree for deduplication
-        PARTITION BY toYear(ingest_ts)
+        ENGINE = ReplacingMergeTree -- Use ReplacingMergeTree for deduplication
         ORDER BY (asin, user_id, parent_asin);
 """
 }
 }
 
-def get_sql_query(key):
+def get_sql_query(key: str) -> str | dict:
     try:
         return sql_queries[key]
     except KeyError as e:

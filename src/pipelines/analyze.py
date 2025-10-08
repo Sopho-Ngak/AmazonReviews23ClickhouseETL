@@ -1,11 +1,10 @@
-from datetime import datetime
 from pathlib import Path
 import polars as pl
 import matplotlib.pyplot as plt
 
 
 from src.utils.clickhouse import ClickHouseDB
-from config.config import clickhouse_config, logger
+from config.config import logger
 from src.sql.analysis import queries as analysis_sql_queries
 
 class AmazonReviewsAnalysis(ClickHouseDB):
@@ -100,7 +99,7 @@ class AmazonReviewsAnalysis(ClickHouseDB):
             
         # 2. Product Popularity Analysis
         if 'product_popularity' in data_dict:
-            prod_df = data_dict['product_popularity']
+            prod_df: pl.DataFrame = data_dict['product_popularity']
             
             # Top products by review count
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
@@ -110,7 +109,7 @@ class AmazonReviewsAnalysis(ClickHouseDB):
             ax1.set_xlabel('Number of Reviews')
             ax1.set_title('Top 20 Products by Review Count')
             ax1.set_yticks(range(len(top_20)))
-            ax1.set_yticklabels([f"Product {i+1}" for i in range(len(top_20))])
+            ax1.set_yticklabels(top_20['asin'].to_list())
             
             # Rating vs Review Count scatter
             sample_df = prod_df.sample(n=min(1000, len(prod_df)))
